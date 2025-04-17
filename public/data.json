@@ -1,0 +1,16 @@
+[
+    {
+        "id": 1,
+        "name": "Áo thun nam",
+        "description" : "Áo thun chất liệu cotton, thời trang",
+        "price": "250000",
+        "status": "Còn hàng"
+    },
+    {
+        "id":2,
+        "name": "Giày thể thao",
+        "description": "Giày thể thao cao cấp, phù hợp mọi hoạt động",
+        "price": "850000",
+        "status": "Hết hàng"
+    }
+]
