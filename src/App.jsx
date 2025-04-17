@@ -6,6 +6,7 @@ import ProductList from './components/ProductList';
 
 function App() {
   const [products, setProducts] = useState([]);
+  const [editProduct, setEditProduct] = useState(null)
 
   // Lấy dữ liệu từ data.json khi component mount
   useEffect(() => {
@@ -35,14 +36,30 @@ function App() {
         : product))
   };
 
+  const updateProduct = (updatedProduct) => {
+    setProducts(products.map(
+      product => product.id === updatedProduct.id ? updatedProduct : product
+        )
+    )
+    setEditProduct(null);
+  }
+
+  const EdittingProduct = (EdittingProduct) => {
+    setEditProduct(EdittingProduct);
+  }
   return(
     <div className="container mt-5">
       <h1 className="text-center mb-4">Quản Lý Sản Phẩm</h1>
-      <ProductForm addProduct={addProduct} />
+      <ProductForm 
+        addProduct={addProduct}
+        updateProduct={updateProduct}
+        EditProduct = {editProduct}
+      />
       <ProductList 
         products={products}
         deleteProduct={deleteProduct}
         toggleStatus={toggleStatus}
+        EdittingProduct = {EdittingProduct}
       />
     </div>
   );

@@ -1,13 +1,22 @@
 import React, {useState, useEffect} from 'react';
 
 
-const ProductForm = ({addProduct}) => {
+const ProductForm = ({addProduct, updateProduct, EditProduct}) => {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState();
     const [status, setStatus] = useState("Còn hàng");
 
     const [errors, setErrors] = useState({});
+
+    useEffect(() => {
+        if(EditProduct) {
+            setName(EditProduct.name);
+            setDescription(EditProduct.description);
+            setPrice(EditProduct.price);
+            setStatus(EditProduct.status)
+        }
+    }, [EditProduct]);
 
     const validate = () => {
         const newErrors = {};
@@ -23,6 +32,7 @@ const ProductForm = ({addProduct}) => {
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     }
+    
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -31,14 +41,17 @@ const ProductForm = ({addProduct}) => {
         }
         else{
             const newProduct = {
-                id : 0,
+                id :EditProduct ? EditProduct.id : Date().now,
                 name,
                 description,
                 price,
                 status
             }
-
-            addProduct(newProduct);
+            if(EditProduct){
+                updateProduct(newProduct);
+                EditProduct = {};
+            }
+            else addProduct(newProduct);
             setName('');
             setDescription('');
             setPrice('');
@@ -48,7 +61,7 @@ const ProductForm = ({addProduct}) => {
 
     return (
         <div className='card p-4 mb-4'>
-            <h3 className="text-center">Thêm Sản Phẩm Mới</h3>
+            <h3 className="text-center">{EditProduct ? 'Chỉnh sửa Sản Phẩm' : 'Thêm Sản Phẩm Mới'}</h3>
 
             <div className='mb-3'>
                 <label className="form-label">Tên Sản Phẩm</label>
@@ -95,7 +108,7 @@ const ProductForm = ({addProduct}) => {
                 {errors.status && <small className="text-danger">{errors.status}</small>}
             </div>
 
-            <button className = 'btn btn-success w-100' onClick={handleSubmit}>Thêm sản phẩm</button>
+            <button className = 'btn btn-success w-100' onClick={handleSubmit}>{EditProduct ? 'Sửa sản phẩm' : 'Thêm sản phẩm'}</button>
         </div>
     )
 }

@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 
-const ProductList = ({products, deleteProduct, toggleStatus}) => {
+const ProductList = ({products, deleteProduct, toggleStatus, EdittingProduct}) => {
+
     return (
         <div className='card p-4'>
             <h3 className="text-center">Danh Sách Sản Phẩm</h3>
@@ -20,6 +21,11 @@ const ProductList = ({products, deleteProduct, toggleStatus}) => {
                                 <button onClick={() => deleteProduct(product.id)} className='btn btn-danger'>
                                     Xóa
                                 </button>
+
+                                <button onClick={() => EdittingProduct(product)} className='btn btn-danger'>
+                                    Sửa
+                                </button>
+
                             </div>
 
                         </div>
